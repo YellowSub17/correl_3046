@@ -1,4 +1,6 @@
 from corr_utils import polar_angular_correlation, to_polar, circle_center
+from plot_utils import plot_2d
+
 
 
 
@@ -45,7 +47,7 @@ sel = run.select('*/DET/*', 'image.data')
 
 train_id, train_data = run.select('*/DET/*', 'image.data').train_from_index(60)
 stacked = stack_detector_data(train_data, 'image.data')
-stacked_pulse = stacked[10][0]
+stacked_pulse = stacked[100][0]
 
 
 
@@ -63,10 +65,14 @@ mask = np.zeros(res.shape)
 mask[np.where(res!=0)] = 1
 
 fig, axes = plt.subplots(1,2)
-axes[0].imshow(res, origin='lower', vmin=0, vmax=10000)
-axes[0].set_title('data')
-axes[1].imshow(mask)
-axes[1].set_title('mask')
+# axes[0].imshow(res, origin='lower', vmin=0, vmax=10000)
+# axes[0].set_title('data')
+# axes[1].imshow(mask)
+# axes[1].set_title('mask')
+
+
+plot_2d(res, fig=fig, axes=axes[0], vminmax=(0, 10000))
+plot_2d(mask, fig=fig, axes=axes[1], vminmax=(0, 10000))
 
 
 center = circle_center(
@@ -124,6 +130,14 @@ plt.figure()
 plt.imshow(im_corr_mask_div, origin='lower')
 plt.title('corr mask div')
 plt.colorbar()
+
+
+plt.figure()
+plt.plot(im_corr_mask_div[109:116, :].sum(axis=0))
+plt.plot(mask_corr[109:116, :].sum(axis=0))
+
+
+
 
 
 
