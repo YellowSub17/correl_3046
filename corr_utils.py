@@ -55,6 +55,18 @@ def index_x(x_val, x_min, x_max, nx, wrap=False):
     return int(x_out)
 
 
+def circle_center(a, b, c):
+
+    D = 2*(a[0]*(b[1] - c[1]) + b[0]*(c[1]-a[1]) + c[0]*(a[1]-b[1]) )
+
+    ux = (a[0]**2+a[1]**2)*(b[1]-c[1]) + (b[0]**2+b[1]**2)*(c[1]-a[1]) +\
+            (c[0]**2+c[1]**2)*(a[1]-b[1])
+
+    uy = (a[0]**2+a[1]**2)*(c[0]-b[0]) + (b[0]**2+b[1]**2)*(a[0]-c[0]) +\
+            (c[0]**2+c[1]**2)*(b[0]-a[0])
+
+    return ( ux/D, uy/D )
+
 
 def to_polar(im, rmax, cenx, ceny):
     '''
