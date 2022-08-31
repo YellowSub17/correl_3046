@@ -118,7 +118,10 @@ def polar_angular_intershell_correlation( polar, polar2=None):
 
 def mask_correction(  corr, maskcorr ):
     imask = np.where( maskcorr != 0 )
+    smallimask = np.where( np.abs(maskcorr) > 1e-10 )
     corr[imask] *= 1.0/maskcorr[imask]
+
+    corr[smallimask] =0
     return corr
 
 

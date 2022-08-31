@@ -26,7 +26,8 @@ def plot_1d(line, **new_kwargs):
                 'subtmean':False,
                 'blur':False,
                 'color':'red',
-                'save':''
+                'save':'',
+                'label':''
             }
 
     kwargs.update(new_kwargs)
