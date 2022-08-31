@@ -1,12 +1,6 @@
 #!/usr/bin/env python
 
 import numpy as np
-
-
-import matplotlib.pyplot as plt
-
-from PIL import Image
-import os
 from skimage.transform import warp_polar
 
 
@@ -126,8 +120,6 @@ def mask_correction(  corr, maskcorr ):
     imask = np.where( maskcorr != 0 )
     corr[imask] *= 1.0/maskcorr[imask]
     return corr
-
-
 
 
 

@@ -9,6 +9,63 @@ from matplotlib.cm import ScalarMappable
 import matplotlib.cm as cm
 from matplotlib.colors import Normalize
 
+from scipy.ndimage import gaussian_filter
+
+
+
+def plot_1d(line, **new_kwargs):
+
+    kwargs ={   
+                'fig':None,
+                'axes':None,
+                'log':False,
+                'xlabel':'',
+                'ylabel':'',
+                'title':'',
+                'norm':False,
+                'subtmean':False,
+                'blur':False,
+                'color':'red',
+                'save':''
+            }
+
+    kwargs.update(new_kwargs)
+
+    line = np.copy(line)
+
+    # Make figure if none given
+    if kwargs['fig'] is None:
+        kwargs['fig'] = plt.figure()
+        kwargs['axes'] = plt.gca()
+
+    if kwargs['log']:
+        line = np.log10(np.abs(line)+1)
+
+    if kwargs['norm']:
+        line -= line.min()
+        line *= 1/line.max()
+
+    if kwargs['subtmean']:
+        mean = line.mean(axis=1)
+        line -= mean
+
+    if kwargs['blur']:
+        line = gaussian_filter(line,  sigma=kwargs['blur'])
+
+    kwargs['axes'].plot(line, color=kwargs['color'])
+
+    kwargs['axes'].set_title(kwargs['title'])
+    kwargs['axes'].set_xlabel(kwargs['xlabel'])
+    kwargs['axes'].set_ylabel(kwargs['ylabel'])
+
+    if kwargs['save'] is not None:
+        plt.savefig(kwargs['save'])
+
+
+
+
+
+
 
 
 
@@ -20,7 +77,7 @@ def plot_2d(im, **new_kwargs):
                 'axes':None,
                 'log':False,
                 'cmap':'viridis',
-                'cb':True,
+                'cb':False,
                 'vminmax':(None, None),
                 'xlabel':'',
                 'ylabel':'',
@@ -34,6 +91,8 @@ def plot_2d(im, **new_kwargs):
             }
 
     kwargs.update(new_kwargs)
+
+    im = np.copy(im)
 
 
     # Make figure if none given
@@ -92,6 +151,10 @@ def plot_2d(im, **new_kwargs):
 
     if kwargs['save'] is not None:
         plt.savefig(kwargs['save'])
+
+
+
+
 
 
 
