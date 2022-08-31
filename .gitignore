@@ -18,3 +18,4 @@ tests/data/
 *.run.xml
 *.synctex.gz
 
+*.swp
